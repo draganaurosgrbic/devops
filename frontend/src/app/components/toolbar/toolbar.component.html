@@ -1,0 +1,6 @@
+<div class="toolbar mat-elevation-z24">
+    <ng-container *ngFor="let button of buttons">
+        <button *ngIf="!hiddenButton(button)" mat-button [routerLink]="button.link"
+            [disabled]="route === button.link">{{button.name}}</button>
+    </ng-container>
+</div>

@@ -1,0 +1,78 @@
+.form {
+  width: 50em;
+  margin: 0 auto;
+  margin-top: 5em;
+
+  .mat-card {
+    padding: 2em;
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      margin-top: 3em;
+
+      .mat-form-field {
+        display: block !important;
+
+        textarea {
+          resize: none;
+        }
+      }
+
+      .composite-control {
+        border: 1px solid #ccc;
+        padding: 1em;
+        margin-top: 1em;
+
+        .spacer {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .element {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid #ccc;
+          margin-bottom: 1em;
+          padding-bottom: 1.5em;
+
+          > span {
+            flex: 1;
+            margin-right: 0.5em;
+          }
+        }
+
+        .element:last-child {
+          border-bottom: none;
+          margin-bottom: none;
+          padding-bottom: none;
+        }
+      }
+
+      .disabled {
+        pointer-events: none;
+        opacity: 0.3;
+      }
+    }
+
+    .submit {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 3em;
+    }
+  }
+}
+
+::ng-deep .mat-datepicker-toggle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

@@ -1,0 +1,22 @@
+<div class="App">
+  <div class="box">
+    <div class="messages">
+      <div *ngFor="let message of messages" class="message" [class.me]="message.sender_id == myId()">
+        <div class="content">{{message.content}}</div>
+        <hr>
+        <div class="footer">{{message.date}}</div>
+      </div>
+    </div>
+    <form [formGroup]="messageForm" class="input-div" (submit)="submitMessage()">
+      <textarea placeholder="Aa" formControlName="message" class="message_input"></textarea>
+      <span class="button_container">
+        <div>
+          <button class="button" type="submit">Send</button>
+        </div>
+        <div style="margin-top: 30%;">
+          <button class="button" (click)="init()">Load</button>
+        </div>
+      </span>
+    </form>
+  </div>
+</div>

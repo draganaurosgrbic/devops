@@ -1,0 +1,48 @@
+.page {
+  padding: 1.5em;
+
+  .search {
+    display: flex;
+
+    .mat-form-field {
+      flex: 1;
+    }
+
+    .mat-icon {
+      position: absolute;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+  }
+
+  .result {
+    background-color: white;
+    padding: 1em;
+    margin-top: 1.5em;
+
+    .row {
+      margin-top: 0.5em;
+      .field {
+        font-weight: bold;
+      }
+
+      .rich-text {
+        border: 3px inset whitesmoke;
+        padding: 2rem;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

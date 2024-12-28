@@ -1,0 +1,72 @@
+<div class="form">
+    <mat-card class="mat-elevation-z24">
+        <mat-card-content>
+            <h1>{{ config.title }}</h1>
+            <form [formGroup]="form" (submit)="$event.stopPropagation()">
+                <div [class.disabled]="pending">
+                    <mat-form-field *ngFor="let control of simple(config.controls)">
+                        <mat-label>{{ fieldPreview(control.name) }}</mat-label>
+                        <input
+                            *ngIf="control.type === undefined || control.type === 'text' || control.type === 'password'"
+                            matInput [type]="control.type" [formControlName]="control.name"
+                            [placeholder]="fieldPreview(control.name)" />
+                        <textarea *ngIf="control.type === 'long-text'" matInput [formControlName]="control.name"
+                            [placeholder]="fieldPreview(control.name)" rows="3"></textarea>
+                        <mat-select *ngIf="control.type === 'select'" [formControlName]="control.name"
+                            [placeholder]="fieldPreview(control.name)">
+                            <mat-option *ngFor="let option of control.options" [value]="option">{{option}}</mat-option>
+                        </mat-select>
+                        <mat-select *ngIf="control.type === 'toggle'" [formControlName]="control.name"
+                            [placeholder]="fieldPreview(control.name)">
+                            <mat-option [value]="true">yes</mat-option>
+                            <mat-option [value]="false">no</mat-option>
+                        </mat-select>
+                        <ng-container *ngIf="control.type === 'date'">
+                            <input matInput [matDatepicker]="picker" [formControlName]="control.name"
+                                [placeholder]="fieldPreview(control.name)">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </ng-container>
+                        <mat-error> {{ fieldPreview(control.name) }} is invalid!</mat-error>
+                    </mat-form-field>
+                    <div *ngFor="let control of composite(config.controls)" class="composite-control">
+                        <div class="spacer">
+                            <h4>{{fieldPreview(control.name)}}</h4>
+                            <button mat-icon-button color="primary" (click)="addElement(control)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div *ngFor="let item of form.get(control.name).value; let i = index" class="element">
+                            <span>
+                                <mat-form-field *ngFor="let element of control.elements">
+                                    <mat-label>{{ fieldPreview(element.name) }}</mat-label>
+                                    <input #textInput
+                                        *ngIf="element.type === undefined || element.type === 'text' || element.type === 'password'"
+                                        matInput [type]="element.type" [placeholder]="fieldPreview(element.name)"
+                                        [value]="item[element.name]"
+                                        (keyup)="updateElement(control, i, element.name, textInput.value)" />
+                                    <ng-container *ngIf="element.type === 'date'">
+                                        <input matInput [matDatepicker]="picker"
+                                            [placeholder]="fieldPreview(element.name)" [value]="item[element.name]"
+                                            (dateChange)="updateElement(control, i, element.name, $event)">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </ng-container>
+                                </mat-form-field>
+                            </span>
+                            <button mat-icon-button color="warn" (click)="removeElement(control, i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit">
+                    <button *ngIf="!pending" mat-raised-button color="primary" (click)="submit()">
+                        Submit
+                    </button>
+                    <app-spinner *ngIf="pending"></app-spinner>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

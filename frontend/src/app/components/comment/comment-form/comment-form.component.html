@@ -1,0 +1,22 @@
+<div class="form">
+    <mat-card class="mat-elevation-z24">
+        <mat-card-content>
+            <h1>Write Comment</h1>
+            <form [formGroup]="form" (submit)="$event.stopPropagation()">
+                <div [class.disabled]="pending">
+                    <mat-form-field>
+                        <mat-label>Text</mat-label>
+                        <textarea matInput [formControlName]="'text'" [placeholder]="'Aa'" rows="3"></textarea>
+                        <mat-error> Text is invalid!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="submit">
+                    <button *ngIf="!pending" mat-raised-button color="primary" (click)="submit()">
+                        Submit
+                    </button>
+                    <app-spinner *ngIf="pending"></app-spinner>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

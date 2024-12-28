@@ -1,0 +1,39 @@
+<div *ngIf="page" class="page">
+    <h1>{{config.title}}</h1>
+    <div class="search" *ngIf="show_search">
+        <mat-form-field>
+            <input matInput placeholder="Search..." #search />
+        </mat-form-field>
+        <button mat-icon-button [routerLink]="['./']" [queryParams]="{search: search.value}">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+    <div class="pagination">
+        <span>
+            <a *ngIf="page.links.prev" mat-button [href]="page.links.prev">Previous Page</a>
+        </span>
+        <span>
+            <a *ngIf="page.links.next" mat-button [href]="page.links.next">Next Page</a>
+        </span>
+    </div>
+    <div *ngFor="let result of page.results" class="result mat-elevation-z8">
+        <div *ngFor="let field of rich_fields(result)" class="row">
+            <angular-editor [(ngModel)]="result[field]" [config]="editor_config"></angular-editor>
+        </div>
+        <div *ngFor="let field of fields(result)" class="row">
+            <span class="field">{{fieldPreview(field)}}</span>: {{valuePreview(result[field], field)}}
+        </div>
+        <div *ngFor="let field of fields(compositeData(result))" class="row">
+            <span class="field">{{fieldPreview(field)}}</span>: {{valuePreview(compositeData(result)[field], field)}}
+        </div>
+        <div class="buttons">
+            <span></span>
+            <span>
+                <ng-container *ngFor="let button of config.buttons">
+                    <button *ngIf="!button.hidden(result)" mat-button
+                        (click)="handleClick(button, result)">{{button.name}}</button>
+                </ng-container>
+            </span>
+        </div>
+    </div>
+</div>
